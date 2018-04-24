@@ -1,21 +1,18 @@
 import React from 'react';
+import Expo from 'expo';
 import { StyleSheet, Text, View } from 'react-native';
+import { TabNavigator } from 'react-navigation';
+import HomeAuth from './screens/HomeAuth';
+import Welcome from './screens/Welcome';
+import Notifications from './screens/Notifications';
 
 export default class App extends React.Component {
   render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
-    );
+    const MainNavigator = TabNavigator({
+      welcome: { screen: Welcome },
+      home: { screen: HomeAuth },
+      notifications: { screen: Notifications }
+    });
+    return <MainNavigator />;
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
