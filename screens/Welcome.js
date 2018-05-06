@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import React, { Component } from 'react';
+import { View, Text } from 'react-native';
 
 class Welcome extends Component {
-  render () {
+  render() {
     return (
       <View>
         <Text>Welcome!!!</Text>
@@ -15,4 +15,4 @@ class Welcome extends Component {
   }
 }
 
-export default Welcome
+export default Welcome;

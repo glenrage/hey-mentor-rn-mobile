@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, AsyncStorage } from 'react-native';
+import { View, Text, AsyncStorage, StyleSheet, Image } from 'react-native';
 import { Facebook } from 'expo';
-import Button from '../components/common/Button';
+import { Button, Card, CardSection } from '../components/common/';
 
 class HomeAuth extends Component {
   state = {
@@ -17,40 +17,67 @@ class HomeAuth extends Component {
   onAuthComplete = props => {
     //after user successfully logs in navigate to notifications page
     if (this.state.fbToken) {
-      this.props.navigation.navigate('notifications')
+      this.props.navigation.navigate('notifications');
     }
-  }
-
-  facebookLogin = async () => {
-    let token = await AsyncStorage.getItem('fb_token');
-    this.doFacebookLogin();
   };
 
-  doFacebookLogin = async () => {
-    let { type, token } = await Facebook.logInWithReadPermissionsAsync('1650628351692070', {
-      permissions: ['public_profile']
+  facebookLogin = async () => {
+    const token = await AsyncStorage.getItem('fb_token');
+    this.initFacebookLogin();
+  };
+
+  initFacebookLogin = async () => {
+    const { type, token } = await Facebook.logInWithReadPermissionsAsync('1650628351692070', {
+      permissions: ['public_profile', 'email', 'user_friends']
     });
 
     if (type === 'cancel') {
       this.setState({ facebookLoginFail: true });
     }
 
-    await AsyncStorage.setItem('fb_token', token);
-    this.setState({ facebookLoginSuccess: true });
-    this.setState({ fbToken: token });
-    this.onAuthComplete(this.props);
+    if (type === 'success') {
+      await AsyncStorage.setItem('fb_token', token);
+      this.setState({
+        facebookLoginSuccess: true,
+        fbToken: token
+      });
+      //API call to FB Graph API. Will add more code to fetch social media data
+      const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
+      console.log(response.json());
+      this.onAuthComplete(this.props);
+    }
   };
 
   render() {
     return (
-      <View>
-        <Text>Auth Screen!</Text>
-        <Text>Auth Screen!</Text>
-        <Button onPress={this.onButtonPress.bind(this)}>Login
-        </Button>
+      // <Card>
+      //   <CardSection>
+      <View style={styles.container}>
+        <Image style={styles.splashStyle} source={require('../assets/heymentorsplash.png')} />
+        <Button onPress={this.onButtonPress.bind(this)}>Login with Facebook</Button>
       </View>
+      //   </CardSection>
+      // </Card>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    borderBottomWidth: 1,
+    padding: 5,
+    paddingTop: 10,
+    backgroundColor: '#fff',
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
+    borderColor: '#ddd',
+    position: 'relative'
+  },
+  splashStyle: {
+    width: 200,
+    height: 200,
+    alignSelf: 'center'
+  }
+});
 
 export default HomeAuth;
