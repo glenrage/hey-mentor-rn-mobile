@@ -21,6 +21,9 @@ class MenteeDetails extends Component {
     ];
 
     const styles = StyleSheet.create({
+      scrollView: {
+        backgroundColor: '#ffffff'
+      },
       detailSectionList: {
           marginLeft: 21,
           marginRight: 20,
@@ -29,7 +32,7 @@ class MenteeDetails extends Component {
     });
 
     return (
-      <ScrollView>
+      <ScrollView style={styles.scrollView}>
         <DetailsHeader image="https://www.w3schools.com/howto/img_avatar.png" delay="0 days" />
         <View id="detailSectionList" style={styles.detailSectionList} >
           <DetailSectionHeader title="Demographics" />
@@ -57,7 +60,6 @@ class MenteeDetails extends Component {
         </View>
       </ScrollView>
     );
-    //<Navbar menteeName={mentee.name} leftImage="left-arrow.png" rightImage="gear.png" />
   }
 }
 
