@@ -50,30 +50,19 @@ class HomeAuth extends Component {
 
   render() {
     return (
-      // <Card>
-      //   <CardSection>
-      <View style={styles.container}>
+      <View>
         <Image style={styles.splashStyle} source={require('../assets/heymentorsplash.png')} />
-        <Button onPress={this.onButtonPress.bind(this)}>Login with Facebook</Button>
+        <Button style={styles.buttonStyle} onPress={this.onButtonPress.bind(this)}>
+          Login with Facebook
+        </Button>
       </View>
-      //   </CardSection>
-      // </Card>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    borderBottomWidth: 1,
-    padding: 5,
-    paddingTop: 10,
-    backgroundColor: '#fff',
-    justifyContent: 'flex-start',
-    flexDirection: 'row',
-    borderColor: '#ddd',
-    position: 'relative'
-  },
   splashStyle: {
+    marginTop: 150,
     width: 200,
     height: 200,
     alignSelf: 'center'
