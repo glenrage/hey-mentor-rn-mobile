@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native';
 
 class DetailSectionHeader extends Component {
   render() {
     const styles = StyleSheet.create({
       container: {
-        flexDirection: 'row',
+        flexDirection: 'row'
       },
       sectionHeader: {
-        color: "#19AFE5",
-        fontFamily: "Roboto",
+        color: '#19AFE5',
+        // fontFamily: 'Roboto',
         fontSize: 18,
         paddingBottom: 5
       },
       hr: {
         borderBottomWidth: 1,
-        borderBottomColor: "#bdbdbd",
+        borderBottomColor: '#bdbdbd',
         marginLeft: 15,
         height: 14,
         flex: 1

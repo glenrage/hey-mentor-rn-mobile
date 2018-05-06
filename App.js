@@ -5,6 +5,7 @@ import { TabNavigator } from 'react-navigation';
 import HomeAuth from './screens/HomeAuth';
 import Welcome from './screens/Welcome';
 import NotificationsScreen from './screens/NotificationsScreen';
+import MenteeDetailsView from './screens/MenteeDetailsView';
 import registerForNotifications from './services/pushNotifications';
 
 export default class App extends React.Component {
@@ -26,7 +27,8 @@ export default class App extends React.Component {
     const MainNavigator = TabNavigator({
       welcome: { screen: Welcome },
       home: { screen: HomeAuth },
-      notifications: { screen: NotificationsScreen }
+      notifications: { screen: NotificationsScreen },
+      menteeDetails: { screen: MenteeDetailsView }
     });
     return <MainNavigator />;
   }
