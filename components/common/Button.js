@@ -1,7 +1,7 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-const Button = ({ onPress, children }) => {
+const Button = ({ onPress, children, style }) => {
   const { buttonStyle, textStyle } = styles;
 
   return (
@@ -11,13 +11,15 @@ const Button = ({ onPress, children }) => {
   );
 };
 
-const styles = {
+const styles = StyleSheet.create({
   buttonStyle: {
     backgroundColor: '#007aff',
     borderRadius: 5,
     borderWidth: 1,
     marginLeft: 5,
-    marginRight: 5
+    marginRight: 5,
+    alignSelf: 'center',
+    width: 150
   },
   textStyle: {
     alignSelf: 'center', //centers itself
@@ -27,6 +29,6 @@ const styles = {
     paddingTop: 10,
     paddingBottom: 10
   }
-};
+});
 
 export { Button };

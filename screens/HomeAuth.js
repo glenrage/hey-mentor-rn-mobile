@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, AsyncStorage, StyleSheet, Image } from 'react-native';
+import { View, Text, AsyncStorage, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Facebook } from 'expo';
-import { Button, Card, CardSection } from '../components/common/';
 
 class HomeAuth extends Component {
   state = {
@@ -9,6 +8,13 @@ class HomeAuth extends Component {
     facebookLoginSuccess: false,
     fbToken: null
   };
+
+  componentDidMount() {
+    console.log(this.state);
+    if (this.state.fbToken !== null) {
+      this.props.navigation.navigate('notifications');
+    }
+  }
 
   onButtonPress() {
     this.facebookLogin();
@@ -50,22 +56,46 @@ class HomeAuth extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <Image style={styles.splashStyle} source={require('../assets/heymentorsplash.png')} />
-        <Button style={styles.buttonStyle} onPress={this.onButtonPress.bind(this)}>
-          Login with Facebook
-        </Button>
+
+        <TouchableOpacity style={styles.buttonStyle} onPress={this.onButtonPress.bind(this)}>
+          <Text style={styles.textStyle}>Login with Facebook</Text>
+        </TouchableOpacity>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'white',
+    flex: 1
+  },
   splashStyle: {
-    marginTop: 150,
-    width: 200,
-    height: 200,
-    alignSelf: 'center'
+    marginTop: 100,
+    width: 275,
+    height: 275,
+    alignSelf: 'center',
+    marginBottom: 80
+  },
+  buttonStyle: {
+    backgroundColor: '#007aff',
+    borderRadius: 5,
+    borderWidth: 1,
+    marginLeft: 5,
+    marginRight: 5,
+    alignSelf: 'center',
+    width: 280,
+    height: 50
+  },
+  textStyle: {
+    alignSelf: 'center',
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: '600',
+    paddingTop: 10,
+    paddingBottom: 10
   }
 });
 
