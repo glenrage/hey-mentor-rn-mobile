@@ -6,6 +6,7 @@ import HomeAuth from './screens/HomeAuth';
 import NotificationsScreen from './screens/NotificationsScreen';
 import MenteeDetailsView from './screens/MenteeDetailsView';
 import registerForNotifications from './services/pushNotifications';
+import ChatScreen from './screens/ChatScreen'
 
 export default class App extends React.Component {
   componentDidMount() {
@@ -20,7 +21,7 @@ export default class App extends React.Component {
     //     Alert.alert('new push notification', text, [{ text: 'Ok' }]);
     //   }
     // });
-  }
+  };
 
   render() {
     const headerTitleStyle = {
@@ -44,7 +45,17 @@ export default class App extends React.Component {
       }
     })
 
+    const userName = 'Ace'; // TODO specify this
     const MainNavigator = StackNavigator({
+      chat: {
+        screen: ChatScreen,
+        navigationOptions: ({ navigation }) => ({
+          title: `💬 ${userName}`, // TODO: Specify recipient name
+          headerTitleStyle: headerTitleStyle,
+          headerLeft: <Image source={require('./static/left-arrow.png')} style={styles.leftImage} />,
+          headerRight: <View />
+        })
+      },
       menteeDetails: {
         screen: MenteeDetailsView,
         navigationOptions: ({ navigation }) => ({
@@ -54,7 +65,6 @@ export default class App extends React.Component {
           headerRight: <Image source={require('./static/gear.png')} style={styles.rightImage} />
         }),
       },
-      welcome: { screen: Welcome },
       home: { screen: HomeAuth },
       notifications: { screen: NotificationsScreen },
     });
