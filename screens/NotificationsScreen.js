@@ -1,19 +1,58 @@
 import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
+import moment from 'moment'
 
 class NotificationsScreen extends Component {
   goBack() {
 
   }
 
+  dateHeader(curDateObj, prevDateObj) {
+    if (prevDateObj && curDateObj.isSame(prevDateObj, 'day')) {
+      return null;
+    }
+
+    const dateStr = curDateObj.calendar(null, {
+      sameDay: '[Today]',
+      nextDay: '[Tomorrow]',
+      lastDay: '[Yesterday]',
+      lastWeek: '[Last] dddd',
+      sameElse: 'DD/MM/YYYY'});
+    return <Text style={styles.dateHeader}>{ dateStr }</Text>;
+  }
+
+  // <Text style={{margin: 5, fontSize: 36, textAlign: 'center'}}>Notifications</Text>
+  // <Button onPress={this.goBack} title="Got It" style={{marginTop: 50}}></Button>
+
   render() {
+
+    // Sample dates
+    const yesterday = moment().subtract(5, 'days')
+    const twoHoursAgo = moment().subtract(2, 'hours')
+    const fiveMinutesAgo = moment().subtract(5, 'minutes')
+
+    const notifications = [
+      { time: yesterday, name: "Kevin", text: "University of Washington application is due tomorrow" },
+      { time: twoHoursAgo, name: "Chadwick", text: "FAFSA is due in three days" },
+      { time: fiveMinutesAgo, text: "College applications are due tomorrow" }
+    ];
+    const notificationViews = []
+
+    for (let i = 0; i < notifications.length; i++) {
+      const curDetails = notifications[i];
+      const prevDate = (notifications[i-1] || {}).time
+
+      notificationViews.push(
+        <View key={ 'view-' + i }>
+          { this.dateHeader(curDetails.time, prevDate) }
+          <Notification time={curDetails.time} name={curDetails.name} text={curDetails.text} />
+        </View>
+      );
+    }
+
     return (
-      <View style={{flex: 1}}>
-      	<Text style={{margin: 5, fontSize: 36, textAlign: 'center'}}>Notifications</Text>
-        <Notification text="Kevin's University of Washington application is due tomorrow"></Notification>
-        <Notification text="Chadwick's FAFSA is due in 3 days"></Notification>
-        <Notification text="College applications are due tomorrow"></Notification>
-        <Button onPress={this.goBack} title="Got It" style={{marginTop: 50}}></Button>
+      <View style={styles.view}>
+        { notificationViews }
       </View>
     );
   }
@@ -22,69 +61,68 @@ class NotificationsScreen extends Component {
 class Notification extends Component {
   constructor(props) {
     super(props);
-    this.state = {isRead: false};
-    this.markAsRead = this.markAsRead.bind(this);
-    this.delete = this.delete.bind(this);
-  }
-
-  markAsRead() {
-    this.setState(prevState => ({
-      isRead: !prevState.isRead
-    }));
-  }
-
-  delete() {
-    this.setState(prevState => ({
-      isDeleted: true
-    }));
   }
 
   render() {
-    const isDeleted = this.state.isDeleted;
-    const isRead = this.state.isRead;
+    let nameStr = this.props.name;
+    if (nameStr) {
+      nameStr = nameStr + (nameStr.endsWith('s') ? '\' ' : '\'s ');
+    }
 
     return (
-    	!isDeleted ?
     	<View style={styles.card}>
-    		<View  style={{backgroundColor: isRead ? '#909090' : 'rgba(25, 175, 229, 0.33)'}}>
-	    		<Text style={styles.message}>{this.props.text}</Text>
-	    		<View style={styles.buttonsContainer}>
-					<Button onPress={this.markAsRead} title={isRead ? "Read" : "Unread"}></Button>
-					<Button onPress={this.delete} title="Remove"></Button>
-				</View>
-			</View>
+    		<Text style={[styles.cardBody, styles.allText]}>
+          { nameStr ? <Text style={[styles.name, styles.allText]}>
+            {nameStr}
+          </Text> : null }
+          <Text style={styles.allText}>{this.props.text}</Text>
+        </Text>
+        <Text style={[styles.allText, styles.time]}>
+          {this.props.time.format('hh:mm A')}
+        </Text>
     	</View>
-    	:
-    	<View></View>
     );
   }
 }
 
 const styles = {
-  message: {
-    padding: 20,
-    textAlign: 'center'
+  dateHeader: {
+    color: '#a0a0a0',
+    marginLeft: 8,
+    paddingTop: 24
+  },
+  time: {
+    color: '#1caee5',
+    marginRight: 8,
+    marginBottom: 4,
+    alignSelf: 'flex-end'
+  },
+  view: {
+    marginLeft: 8,
+    marginRight: 8
+  },
+  name: {
+    margin: 0,
+    fontWeight: 'bold'
+  },
+  cardBody: {
+    paddingRight: 40,
   },
   card: {
-    borderWidth: 1,
     borderRadius: 5,
-    borderColor: '#ddd',
-    borderBottomWidth: 0,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
+    borderWidth: 1,
+    borderColor: '#ddf3fb',
     elevation: 1,
-    marginLeft: 5,
-    marginRight: 5,
-    marginTop: 5,
-    marginBottom: 5,
-    backgroundColor: 'rgba(25, 175, 229, 0.33)'  	
+    margin: 0,
+    marginTop: 8,
+    backgroundColor: '#ddf3fb',
+    paddingTop: 16,
+    paddingLeft: 8,
+    width: '100%'
   },
-  buttonsContainer: {
-  	margin: 10, 
-  	flexDirection: 'row', 
-  	justifyContent: 'center'
+  allText: {
+    fontSize: 14,
+    lineHeight: 21
   }
 };
 

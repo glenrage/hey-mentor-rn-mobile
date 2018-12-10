@@ -27,8 +27,9 @@ export default class App extends React.Component {
       flex: 1,
       textAlign: 'center',
       color: '#000000',
-      fontSize: 24,
-      fontWeight: 'bold'
+      fontSize: 17,
+      fontWeight: 'bold',
+      fontFace: 'roboto'
     }
 
     const styles = StyleSheet.create({
@@ -41,6 +42,9 @@ export default class App extends React.Component {
         width: 40,
         height: 40,
         marginRight: 24
+      },
+      whiteCard: {
+        backgroundColor: '#ffffff'
       }
     })
 
@@ -54,9 +58,10 @@ export default class App extends React.Component {
           headerRight: <Image source={require('./static/gear.png')} style={styles.rightImage} />
         }),
       },
-      welcome: { screen: Welcome },
       home: { screen: HomeAuth },
       notifications: { screen: NotificationsScreen },
+    }, {
+      cardStyle: styles.whiteCard
     });
     return <MainNavigator />;
   }
