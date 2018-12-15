@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
 import moment from 'moment'
+import pluralize from 'pluralize'
 
 class NotificationsScreen extends Component {
   goBack() {
@@ -20,9 +21,6 @@ class NotificationsScreen extends Component {
       sameElse: 'DD/MM/YYYY'});
     return <Text style={styles.dateHeader}>{ dateStr }</Text>;
   }
-
-  // <Text style={{margin: 5, fontSize: 36, textAlign: 'center'}}>Notifications</Text>
-  // <Button onPress={this.goBack} title="Got It" style={{marginTop: 50}}></Button>
 
   render() {
 
@@ -66,12 +64,12 @@ class Notification extends Component {
   render() {
     let nameStr = this.props.name;
     if (nameStr) {
-      nameStr = nameStr + (nameStr.endsWith('s') ? '\' ' : '\'s ');
+      nameStr = pluralize(nameStr);
     }
 
     return (
-    	<View style={styles.card}>
-    		<Text style={[styles.cardBody, styles.allText]}>
+      <View style={styles.card}>
+        <Text style={[styles.cardBody, styles.allText]}>
           { nameStr ? <Text style={[styles.name, styles.allText]}>
             {nameStr}
           </Text> : null }
@@ -80,7 +78,7 @@ class Notification extends Component {
         <Text style={[styles.allText, styles.time]}>
           {this.props.time.format('hh:mm A')}
         </Text>
-    	</View>
+      </View>
     );
   }
 }
