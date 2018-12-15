@@ -3,6 +3,9 @@ import { View, Text, Button } from 'react-native';
 import moment from 'moment'
 import pluralize from 'pluralize'
 
+pluralize.addPluralRule(/$/i, '\'s ');
+pluralize.addPluralRule(/s$/i, 's\' ');
+
 class NotificationsScreen extends Component {
   goBack() {
 

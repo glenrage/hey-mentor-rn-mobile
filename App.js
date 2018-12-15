@@ -49,6 +49,7 @@ export default class App extends React.Component {
     })
 
     const MainNavigator = StackNavigator({
+      notifications: { screen: NotificationsScreen },
       menteeDetails: {
         screen: MenteeDetailsView,
         navigationOptions: ({ navigation }) => ({
@@ -59,7 +60,6 @@ export default class App extends React.Component {
         }),
       },
       home: { screen: HomeAuth },
-      notifications: { screen: NotificationsScreen },
     }, {
       cardStyle: styles.whiteCard
     });
